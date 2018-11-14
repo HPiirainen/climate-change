@@ -32,8 +32,12 @@ class Results extends Component {
               id
               capitalCity
               populations {
-                date
-                value
+                year: date
+                population: value
+              }
+              emissions {
+                year: date
+                emission: value
               }
             }
           }
