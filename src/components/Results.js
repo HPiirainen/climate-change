@@ -6,9 +6,8 @@ import {
   Container,
   Row,
   Col,
-  ListGroup,
-  ListGroupItem,
 } from 'reactstrap';
+import CountryChart from './CountryChart';
 
 class Results extends Component {
 
@@ -54,13 +53,26 @@ class Results extends Component {
           return <p>Error</p>;
         }
 
-        let populations = [];
-        if ('populations' in data.country && data.country.populations.length) {
-          populations = data.country.populations.map(({date, value}) => (
-            <ListGroupItem key={ date }>
-              <strong>Year:</strong> { date } <strong>Population:</strong> { this.formatPopulation(value) }
-            </ListGroupItem>
-          ));
+        const proportionalEmissions = data.country.populations.reduce((results, item) => {
+          const emissionObject = data.country.emissions.find((emission) => emission.year === item.year);
+          if (emissionObject !== undefined) {
+            const perPerson = (emissionObject.emission * 1000) / item.population;
+            if (!isNaN(perPerson)) {
+              results.push({
+                year: item.year,
+                emissionsPerPerson: perPerson.toFixed(2),
+              });
+            }
+          }
+          return results;
+        }, []);
+
+        let chart;
+
+        if (proportionalEmissions.length > 0) {
+          chart = <CountryChart chartData={ proportionalEmissions } />
+        } else {
+          chart = <h4>Not enough information</h4>
         }
 
         return (
@@ -69,10 +81,8 @@ class Results extends Component {
               <Col sm="12" md={{ size: 8, offset: 2 }}>
                 <h2>{ data.country.name }</h2>
                 <p><strong>Capital city:</strong> { data.country.capitalCity }</p>
-                <h3>Populations</h3>
-                <ListGroup>
-                  { populations }
-                </ListGroup>
+                <h3>CO<sup>2</sup> emissions per person</h3>
+                { chart }
               </Col>
             </Row>
           </Container>
