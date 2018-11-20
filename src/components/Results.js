@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
@@ -7,82 +7,82 @@ import {
   Row,
   Col,
 } from 'reactstrap';
-import CountryChart from './CountryChart';
+import CountryChartContainer from './CountryChartContainer';
 
 class Results extends Component {
 
-  formatPopulation(population) {
-    return population
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-
   render() {
-    if (this.props.currentCountry === '') {
-      return '';
+    const { selectedCountries } = this.props;
+
+    if (selectedCountries.length === 0) {
+      return null;
     }
+
     return (
       <Query
         query={ gql`
-          query Country($iso2Code: String!){
-            country(iso2Code: $iso2Code) {
-              name
-              iso2Code
-              id
-              capitalCity
-              populations {
+          query Countries($iso2Codes: [String]!) {
+            countries(iso2Codes: $iso2Codes) {
+              country: name
+              years {
                 year: date
-                population: value
-              }
-              emissions {
-                year: date
-                emission: value
+                population
+                emission
+                emissionPerPerson
               }
             }
           }
         `}
-        variables={{ 'iso2Code': this.props.currentCountry }}
+        variables={{ 'iso2Codes': selectedCountries.map((country) => country.value) }}
       >
       {({ loading, error, data }) => {
 
         if (loading) {
-          return <p>Loading...</p>;
+          return <span className="h1">Loading...</span>;
         }
 
         if (error) {
+          console.log(error);
           return <p>Error</p>;
         }
 
-        const proportionalEmissions = data.country.populations.reduce((results, item) => {
-          const emissionObject = data.country.emissions.find((emission) => emission.year === item.year);
-          if (emissionObject !== undefined) {
-            const perPerson = (emissionObject.emission * 1000) / item.population;
-            if (!isNaN(perPerson)) {
-              results.push({
-                year: item.year,
-                emissionsPerPerson: perPerson.toFixed(2),
-              });
-            }
-          }
-          return results;
-        }, []);
+        const validCountryObjects = data.countries.filter((countryObject) => {
+          return countryObject.years.some(year => year.emissionPerPerson > 0);
+        });
 
-        let chart;
+        const invalidCountryObjects = data.countries.filter((countryObject) => {
+          return !validCountryObjects.includes(countryObject);
+        });
 
-        if (proportionalEmissions.length > 0) {
-          chart = <CountryChart chartData={ proportionalEmissions } />
-        } else {
-          chart = <h4>Not enough information</h4>
+        let chartContainer = null;
+        let noResultsContainer = null;
+
+        if (invalidCountryObjects.length > 0) {
+          const invalidCountries = invalidCountryObjects.map(({ country }) => (
+            <li key={ country }>{ country }</li>
+          ));
+          noResultsContainer = (
+            <Fragment>
+              <h4>Not enough information for:</h4>
+              <ul className="list-unstyled">
+                { invalidCountries }
+              </ul>
+            </Fragment>
+          )
+        }
+
+        if (validCountryObjects.length > 0) {
+          chartContainer = <CountryChartContainer
+                            chartData={ validCountryObjects }
+                           />
         }
 
         return (
           <Container>
             <Row>
-              <Col sm="12" md={{ size: 8, offset: 2 }}>
-                <h2>{ data.country.name }</h2>
-                <p><strong>Capital city:</strong> { data.country.capitalCity }</p>
-                <h3>CO<sup>2</sup> emissions per person</h3>
-                { chart }
+              <Col>
+                { chartContainer }
+                { noResultsContainer }
               </Col>
             </Row>
           </Container>
@@ -95,6 +95,7 @@ class Results extends Component {
 
 Results.propTypes = {
   currentCountry: PropTypes.string,
+  selectedCountries: PropTypes.array,
 };
 
 export default Results;
