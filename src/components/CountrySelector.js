@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import Select from 'react-select';
+import { Form, FormGroup } from 'reactstrap';
 
 class CountrySelector extends Component {
+
   render() {
+
+    const { selectedCountries, onCountriesChanged } = this.props;
     return (
       <Query
         query={ gql`
@@ -29,21 +33,22 @@ class CountrySelector extends Component {
           return <p>Error</p>;
         }
 
-        const countries = data.allCountries.map(({ id, name, iso2Code, capitalCity }) => (
-          <option key={ id } value={ iso2Code }>{ name }</option>
-        ));
+        const countryOptions = data.allCountries.map(({ name, iso2Code }) => {
+          return { value: iso2Code, label: name };
+        });
 
         return (
           <Form>
             <FormGroup>
-              <Label for="country">Select country</Label>
-              <Input type="select"
-                value={ this.props.currentCountry }
-                onChange={ this.props.onCountryChanged }
-              >
-                <option value="">----</option>
-                { countries }
-              </Input>
+              <span id="country-selector" className="sr-only">Select countries</span>
+              <Select
+                options={ countryOptions }
+                isMulti={ true }
+                placeholder="Select countries..."
+                onChange={ onCountriesChanged }
+                value={ selectedCountries }
+                aria-labelledby="country-selector"
+              />
             </FormGroup>
           </Form>
         );
@@ -54,8 +59,8 @@ class CountrySelector extends Component {
 }
 
 CountrySelector.propTypes = {
-  onCountryChanged: PropTypes.func,
-  currentCountry: PropTypes.string,
+  selectedCountries: PropTypes.array,
+  onCountriesChanged: PropTypes.func,
 };
 
 export default CountrySelector;

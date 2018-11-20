@@ -5,11 +5,12 @@ import CountrySelector from './CountrySelector';
 
 class Countries extends Component {
   render() {
+    const { selectedCountries, onCountriesChanged } = this.props;
     return (
       <Container>
         <Row>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <CountrySelector onCountryChanged={ this.props.onCountryChanged } currentCountry={ this.props.currentCountry } />
+            <CountrySelector selectedCountries={ selectedCountries } onCountriesChanged={ onCountriesChanged } />
           </Col>
         </Row>
       </Container>
@@ -18,8 +19,8 @@ class Countries extends Component {
 }
 
 Countries.propTypes = {
-  onCountryChanged: PropTypes.func,
-  currentCountry: PropTypes.string,
+  selectedCountries: PropTypes.array,
+  onCountriesChanged: PropTypes.func,
 };
 
 export default Countries;
