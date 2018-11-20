@@ -13,24 +13,30 @@ const client = new ApolloClient({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.handleCountryChanged = this.handleCountryChanged.bind(this);
+    this.handleCountriesChanged = this.handleCountriesChanged.bind(this);
     this.state = {
-      selectedCountry: '',
+      selectedCountries: [],
     };
   }
 
-  handleCountryChanged(e) {
-    this.setState({ selectedCountry: e.target.value });
+  handleCountriesChanged(value) {
+    this.setState({ selectedCountries: value });
   }
 
   render() {
-    const currentCountry = this.state.selectedCountry;
+    const { selectedCountries } = this.state;
+
     return (
       <ApolloProvider client={ client }>
         <div id="app" className="text-center">
-          <Hero />
-          <Countries onCountryChanged={ this.handleCountryChanged } currentCountry={ currentCountry } />
-          <Results currentCountry={ currentCountry } />
+          <Hero changeCountries={ this.handleCountriesChanged } />
+          <Countries
+            selectedCountries={ selectedCountries }
+            onCountriesChanged={ this.handleCountriesChanged }
+          />
+          <Results
+            selectedCountries={ selectedCountries }
+          />
         </div>
       </ApolloProvider>
     );
