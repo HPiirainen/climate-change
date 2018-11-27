@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import CountrySelector from './CountrySelector';
 
 class Countries extends Component {
+  
   render() {
     const { selectedCountries, onCountriesChanged } = this.props;
     return (
