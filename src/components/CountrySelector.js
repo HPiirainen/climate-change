@@ -8,7 +8,6 @@ import { Form, FormGroup } from 'reactstrap';
 class CountrySelector extends Component {
 
   render() {
-
     const { selectedCountries, onCountriesChanged } = this.props;
     return (
       <Query

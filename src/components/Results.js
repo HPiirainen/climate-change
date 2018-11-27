@@ -28,7 +28,7 @@ class Results extends Component {
                 year: date
                 population
                 emission
-                emissionPerPerson
+                gdp
               }
             }
           }
@@ -47,11 +47,11 @@ class Results extends Component {
         }
 
         const validCountryObjects = data.countries.filter((countryObject) => {
-          return countryObject.years.some(year => year.emissionPerPerson > 0);
+          return countryObject.years.some(year => year.emission > 0);
         });
 
         const invalidCountryObjects = data.countries.filter((countryObject) => {
-          return !validCountryObjects.includes(countryObject);
+          return ! validCountryObjects.includes(countryObject);
         });
 
         let chartContainer = null;
@@ -74,6 +74,7 @@ class Results extends Component {
         if (validCountryObjects.length > 0) {
           chartContainer = <CountryChartContainer
                             chartData={ validCountryObjects }
+                            chartHeight={ 300 }
                            />
         }
 
