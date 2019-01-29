@@ -19,7 +19,7 @@ class Presets extends Component {
     ));
     return (
       <Fragment>
-        <p className="lead">{ "If you're fresh out of ideas, try these presets!" }</p>
+        <p>{ "If you're fresh out of ideas, try these presets!" }</p>
         <p>{ buttons }</p>
       </Fragment>
     )
