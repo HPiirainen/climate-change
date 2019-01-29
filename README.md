@@ -4,7 +4,7 @@ A simple app for comparing key data and changes between selected countries over 
 
 The app can be viewed in [Heroku](https://climate-change-hpiirainen.herokuapp.com/).
 
-See also the repo for the [back-end side].
+See also the repo for the [back-end side](https://github.com/HPiirainen/climate-change-backend).
 
 ## Background
 
@@ -25,8 +25,8 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
 Clone the repo
 
 ```
-git clone [url]
-cd [path]
+git clone https://github.com/HPiirainen/climate-change.git
+cd climate-change
 ```
 
 Install dependencies
@@ -45,7 +45,7 @@ yarn start
 npm start
 ```
 
-In order to use the app, you must also **install the [backend repo]** and run it.
+In order to use the app, you must also **install the [backend repo](https://github.com/HPiirainen/climate-change-backend)** and run it.
 
 ### Deployment
 

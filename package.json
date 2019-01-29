@@ -6,6 +6,10 @@
     "name": "Hermanni Piirainen",
     "email": "hermanni.piirainen@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HPiirainen/climate-change.git"
+  },
   "license": "MIT",
   "dependencies": {
     "apollo-boost": "^0.1.20",
