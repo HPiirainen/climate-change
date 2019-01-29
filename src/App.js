@@ -42,7 +42,7 @@ class App extends Component {
             <div className="container">
               <p>
                 &copy; Hermanni Piirainen
-                <span class="ml-3">
+                <span className="ml-3">
                   <a href="https://github.com/HPiirainen">
                     <img src={GHLogo} width="32" height="32" alt="GitHub" />
                   </a>
