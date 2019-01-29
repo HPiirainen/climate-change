@@ -4,6 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 import Hero from './components/Hero';
 import Countries from './components/Countries';
 import Results from './components/Results';
+import GHLogo from './images/GitHub-Mark-64px.png';
 import './App.css';
 
 const client = new ApolloClient({
@@ -37,6 +38,18 @@ class App extends Component {
           <Results
             selectedCountries={ selectedCountries }
           />
+          <footer className="bg-light py-4">
+            <div className="container">
+              <p>
+                &copy; Hermanni Piirainen
+                <span class="ml-3">
+                  <a href="https://github.com/HPiirainen">
+                    <img src={GHLogo} width="32" height="32" alt="GitHub" />
+                  </a>
+                </span>
+              </p>
+            </div>
+          </footer>
         </div>
       </ApolloProvider>
     );
