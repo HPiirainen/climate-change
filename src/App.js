@@ -7,7 +7,7 @@ import Results from './components/Results';
 import GHLogo from './images/GitHub-Mark-64px.png';
 import './App.css';
 
-const productionURL = 'https://sheltered-tundra-47394.herokuapp.com/graphql';
+const productionURL = 'https://climate-change-back-hpiirainen.herokuapp.com/graphql';
 const localURL = 'http://localhost:4000/graphql';
 const backendURL = process.env.NODE_ENV === 'production' ? productionURL : localURL;
 
