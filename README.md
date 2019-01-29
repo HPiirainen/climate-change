@@ -1,44 +1,60 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Climate Change
 
-## Available Scripts
+A simple app for comparing key data and changes between selected countries over time.
 
-In the project directory, you can run:
+The app can be viewed in [Heroku](https://climate-change-hpiirainen.herokuapp.com/).
 
-### `npm start`
+See also the repo for the [back-end side].
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Background
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+The app is based on the [Reaktor summer job challenge](https://www.reaktor.com/ennakkotehtava-ohjelmistokehittaja/).
+Data is fetched from [The World Bank API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-this-api-documentation).
 
-### `npm test`
+The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Node.js
+* `npm` or `yarn`
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Clone the repo
 
-### `npm run eject`
+```
+git clone [url]
+cd [path]
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Install dependencies
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+yarn install
+# or
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Start development server
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+yarn start
+# or
+npm start
+```
 
-## Learn More
+In order to use the app, you must also **install the [backend repo]** and run it.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Production build can be created by running
+
+```
+yarn run build
+# or
+npm run build
+```
+
+The project includes an Express server `server.js` that is used f. ex. in Heroku according to `Procfile`.

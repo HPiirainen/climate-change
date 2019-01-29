@@ -1,7 +1,12 @@
 {
   "name": "climate-change",
+  "description": "A simple app for viewing key data about countries",
   "version": "0.5.0",
-  "private": true,
+  "author": {
+    "name": "Hermanni Piirainen",
+    "email": "hermanni.piirainen@gmail.com"
+  },
+  "license": "MIT",
   "dependencies": {
     "apollo-boost": "^0.1.20",
     "bootstrap": "^4.1.3",
@@ -33,6 +38,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {}
+  ]
 }
